@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinaAyu Feminine Spray — Perawatan Kewanitaan Herbal Premium</title>
+    <meta name="description" content="Perawatan feminine spray berbahan herbal alami. Membantu menjaga kesegaran, kelembapan, dan kenyamanan area kewanitaan. BPOM approved, packaging rahasia.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config={theme:{extend:{colors:{blush:{50:'#FFF8FA',100:'#FFF0F3',200:'#FDE0E7',300:'#F9C4D0',400:'#F0A0B5',500:'#E47A95',600:'#D4577A'},cream:{50:'#FFFCF9',100:'#FFF8F0',200:'#FFF0DE'},rosegold:{300:'#E8C4A8',400:'#D4A574',500:'#C49464'},peach:{50:'#FFF8F5',100:'#FFEDE4',200:'#FFD8C7',300:'#FFBD9F'},warm:{50:'#FAF5F2',100:'#F5EDE8',200:'#E8D8CF',500:'#8A7068',600:'#7A5C5E',700:'#5E4446',800:'#3D2C2E',900:'#2A1E1F'}},fontFamily:{poppins:['Poppins','sans-serif'],nunito:['Nunito','sans-serif']}}}};
+    </script>
+    <style>
+        *{scroll-behavior:smooth}
+        ::selection{background:#F9C4D0;color:#3D2C2E}
+        body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        ::-webkit-scrollbar{width:5px}
+        ::-webkit-scrollbar-track{background:#FFF8FA}
+        ::-webkit-scrollbar-thumb{background:#F9C4D0;border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:#F0A0B5}
+        .scrollbar-hide::-webkit-scrollbar{display:none}
+        .scrollbar-hide{-ms-overflow-style:none;scrollbar-width:none}
+
+        @keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(12px,-18px) scale(1.06)}}
+        @keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-16px,14px) scale(1.04)}}
+        @keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8px,12px) scale(1.03)}}
+        .fl-1{animation:float1 7s ease-in-out infinite}
+        .fl-2{animation:float2 9s ease-in-out infinite}
+        .fl-3{animation:float3 11s ease-in-out infinite}
+
+        @keyframes slideIn{from{transform:translateX(-110%);opacity:0}to{transform:translateX(0);opacity:1}}
+        @keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(-110%);opacity:0}}
+        .popup-in{animation:slideIn .45s ease-out forwards}
+        .popup-out{animation:slideOut .35s ease-in forwards}
+
+        @keyframes pulse-soft{0%,100%{opacity:1}50%{opacity:.5}}
+        .pulse-s{animation:pulse-soft 2s ease-in-out infinite}
+
+        @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+        .shimmer-btn{background-size:200% auto;animation:shimmer 3s linear infinite}
+
+        @keyframes bounce-g{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+        .bounce-g{animation:bounce-g 2.5s ease-in-out infinite}
+
+        @keyframes petal-fall{0%{transform:translateY(-10%) rotate(0deg);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+        .petal{position:absolute;border-radius:50% 0 50% 0;opacity:0;pointer-events:none}
+
+        @keyframes glow-pulse{0%,100%{box-shadow:0 0 30px rgba(249,196,208,.3),0 0 60px rgba(212,165,116,.15)}50%{box-shadow:0 0 50px rgba(249,196,208,.5),0 0 80px rgba(212,165,116,.25)}}
+        .glow-pulse{animation:glow-pulse 3s ease-in-out infinite}
+
+        @keyframes product-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        .product-float{animation:product-float 4s ease-in-out infinite}
+
+        .glass{background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.5)}
+        .sticky-bar{transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+        .sticky-bar.vis{transform:translateY(0)}
+
+        .hero-bg{background-image:radial-gradient(circle at 15% 50%,rgba(249,196,208,.35) 0%,transparent 50%),radial-gradient(circle at 85% 20%,rgba(212,165,116,.18) 0%,transparent 50%),radial-gradient(circle at 50% 90%,rgba(244,160,181,.2) 0%,transparent 50%)}
+    </style>
+</head>
+<body class="bg-white font-nunito text-warm-600">
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const{useState,useEffect,useRef,useCallback,useMemo}=React;
+
+/* ===== HOOKS ===== */
+function useAnim(threshold=.07){
+    const r=useRef(null),[v,setV]=useState(false);
+    useEffect(()=>{const e=r.current;if(!e)return;const o=new IntersectionObserver(([n])=>{if(n.isIntersecting){setV(true);o.unobserve(e)}},{threshold,rootMargin:'0px 0px -30px 0px'});o.observe(e);return()=>o.disconnect()},[threshold]);
+    return[r,v];
+}
+function useCD(){
+    const t=useMemo(()=>{const d=new Date();d.setHours(d.getHours()+5,d.getMinutes()+47,d.getSeconds()+33);return d.getTime()},[]);
+    const[l,setL]=useState({h:5,m:47,s:33});
+    useEffect(()=>{const f=()=>{const d=Math.max(0,t-Date.now());setL({h:Math.floor(d/36e5),m:Math.floor(d/6e4%60),s:Math.floor(d/1e3%60)})};f();const i=setInterval(f,1000);return()=>clearInterval(i)},[t]);
+    return l;
+}
+function useSticky(){
+    const[s,setS]=useState(false);
+    useEffect(()=>{const h=()=>{const y=window.scrollY,dh=document.documentElement.scrollHeight,wh=window.innerHeight;setS(y>550&&y<dh-wh-250)};window.addEventListener('scroll',h,{passive:true});return()=>window.removeEventListener('scroll',h)},[]);
+    return s;
+}
+
+/* ===== DATA ===== */
+const PRODUCT_IMG='https://z-cdn-media.chatglm.cn/files/4fad890c-7831-4dcc-acc8-afa4faa31526.png?auth_key=1880575655-6b7f3a01e91f458c918988486af8a745-0-e3b275d0336681183667965904cf12a1';
+
+const orders=[
+    {n:'Bu Sari',c:'Jakarta Selatan'},{n:'Bu Rina',c:'Bandung'},{n:'Bu Dewi',c:'Surabaya'},
+    {n:'Bu Ayu',c:'Yogyakarta'},{n:'Bu Fitri',c:'Semarang'},{n:'Bu Nurul',c:'Medan'},
+    {n:'Bu Indah',c:'Makassar'},{n:'Bu Lestari',c:'Depok'},{n:'Bu Wulan',c:'Bekasi'},
+    {n:'Bu Putri',c:'Tangerang'},{n:'Bu Anisa',c:'Bogor'},{n:'Bu Mega',c:'Malang'},
+    {n:'Bu Dian',c:'Palembang'},{n:'Bu Ratna',c:'Balikpapan'},
+];
+
+const ingredients=[
+    {id:'sirih',name:'Daun Sirih',latin:'Piper Betle',emoji:'🍃',img:'img/sirih.jpg',
+     desc:'Daun sirih telah lama digunakan dalam perawatan tradisional wanita Indonesia karena dikenal membantu menjaga kebersihan area kewanitaan secara alami.',
+     benefits:['Membantu menjaga kesegaran','Membantu mengurangi aroma tidak sedap','Membantu menjaga kebersihan alami','Kaya antioksidan alami'],
+     color:'from-green-100 to-emerald-50',border:'border-green-100'},
+    {id:'lidahbuaya',name:'Lidah Buaya',latin:'Aloe Vera',emoji:'🌿',img:'img/lidahbuaya.jpeg',
+     desc:'Aloe vera dikenal memiliki kandungan alami yang membantu menjaga kelembapan dan memberikan sensasi menenangkan pada kulit sensitif.',
+     benefits:['Membantu menjaga kelembapan alami','Membantu mengurangi rasa kering','Memberikan rasa nyaman','Cocok untuk kulit sensitif'],
+     color:'from-peach-100 to-peach-50',border:'border-peach-200'},
+    {id:'manjakani',name:'Manjakani',latin:'Quercus Infectoria',emoji:'🌰',img:'img/monjakani.jpg',
+     desc:'Manjakani telah lama dikenal dalam tradisi herbal Asia sebagai tanaman yang digunakan wanita untuk membantu menjaga elastisitas dan kenyamanan area kewanitaan.',
+     benefits:['Membantu menjaga elastisitas alami','Membantu meningkatkan rasa percaya diri','Membantu memberikan rasa nyaman'],
+     color:'from-amber-50 to-yellow-50',border:'border-amber-100'},
+    {id:'sambiloto',name:'Sambiloto',latin:'Andrographis Paniculata',emoji:'🌱',img:'img/sambilotoo.jpeg',
+     desc:'Sambiloto dikenal memiliki kandungan alami yang sering digunakan dalam perawatan herbal karena sifat alaminya yang membantu perlindungan.',
+     benefits:['Membantu menjaga kebersihan kulit sensitif','Membantu memberikan perlindungan alami','Membantu menjaga kenyamanan area intim'],
+     color:'from-teal-50 to-cyan-50',border:'border-teal-100'},
+];
+
+const benefitList=[
+    {icon:'💧',title:'Membantu Menjaga pH Area Kewanitaan',desc:'Formulasi yang dirancang untuk membantu menjaga keseimbangan pH alami area intim.'},
+    {icon:'🌸',title:'Membantu Menjaga Kesegaran Sepanjang Hari',desc:'Memberikan rasa segar yang tahan lama untuk aktivitas harian tanpa khawatir.'},
+    {icon:'✨',title:'Membantu Mengurangi Aroma Tidak Sedap',desc:'Kandungan herbal alami yang membantu menjaga kesegaran dan kebersihan.'},
+    {icon:'💝',title:'Membantu Menjaga Kelembapan Alami',desc:'Tidak membuat kering, justru membantu menjaga kelembapan kulit sensitif.'},
+    {icon:'💖',title:'Memberikan Rasa Nyaman & Percaya Diri',desc:'Ketika tubuh terasa segar dan nyaman, kepercayaan diri meningkat secara alami.'},
+    {icon:'📱',title:'Praktis Digunakan Kapan Saja',desc:'Cukup semprotkan, tidak perlu dibilas. Praktis untuk dibawa bepergian.'},
+];
+
+const testimonials=[
+    {name:'Bu Rina A.',loc:'Jakarta',seed:'rina-ayu-portrait',rating:5,text:'Sekarang jadi lebih percaya diri lagi saat dekat suami ❤️ Rasanya segar sepanjang hari!',date:'2 hari lalu',verified:true},
+    {name:'Bu Dewi S.',loc:'Bandung',seed:'dewi-smile-face',rating:5,text:'Yang aku suka karena herbal dan nyaman dipakai rutin. Nggak perih sama sekali. Recommended! ✨',date:'3 hari lalu',verified:true},
+    {name:'Bu Sari M.',loc:'Surabaya',seed:'sari-happy-woman',rating:5,text:'Packaging aman jadi nggak malu pas paket datang. Isinya polos, privasi terjaga 100%. 👍',date:'5 hari lalu',verified:true},
+    {name:'Bu Fitri H.',loc:'Yogyakarta',seed:'fitri-hijab-lady',rating:5,text:'Setelah melahirkan rasanya beda banget. Alhamdulillah sekarang mulai pulih percaya diri lagi 💕',date:'1 minggu lalu',verified:true},
+    {name:'Bu Nurul Z.',loc:'Semarang',seed:'nurul-elegant',rating:5,text:'Wangi nya lembut banget, nggak menyengat. Suami bilang ada bedanya loh. Bahagia banget! 🌸',date:'1 minggu lalu',verified:true},
+    {name:'Bu Ayu P.',loc:'Malang',seed:'ayu-young-mother',rating:5,text:'Udah coba berbagai brand, ini yang paling cocok. Nggak bikin iritasi, cocok untuk kulit sensitifku.',date:'2 minggu lalu',verified:true},
+];
+
+const stepsData=[
+    {n:1,title:'Kocok Botol',desc:'Kocok botol LinaAyu terlebih dahulu sebelum digunakan agar formula tercampur sempurna.',icon:'🫧'},
+    {n:2,title:'Semprotkan',desc:'Semprotkan secukupnya ke area luar kewanitaan dari jarak 10-15 cm.',icon:'💧'},
+    {n:3,title:'Pagi & Malam',desc:'Gunakan 2x sehari setelah mandi untuk hasil yang optimal.',icon:'🌅'},
+    {n:4,title:'Tidak Perlu Dibilas',desc:'Biarkan meresap secara alami. Tidak perlu dibilas setelah penggunaan.',icon:'✨'},
+    {n:5,title:'Simpan dengan Benar',desc:'Simpan di tempat sejuk dan kering, jauh dari sinar matahari langsung.',icon:'📦'},
+];
+
+const faqs=[
+    {q:'Apakah LinaAyu Feminine Spray aman digunakan?',a:'Ya, LinaAyu diformulasikan dengan bahan-bahan herbal alami yang telah teruji dan mendapatkan izin BPOM. Produk ini aman untuk penggunaan pada area luar kewanitaan.'},
+    {q:'Apakah bisa digunakan setiap hari?',a:'Tentu! LinaAyu dirancang untuk penggunaan harian, 2x sehari (pagi dan malam setelah mandi). Formula yang lembut cocok untuk pemakaian rutin.'},
+    {q:'Apakah packaging aman dan terjaga privasinya?',a:'100% ya. Kami menggunakan packaging plain polos tanpa logo produk di bagian luar. Tertulis hanya "Perawatan Tubuh" sebagai keterangan. Privasi Anda adalah prioritas utama kami.'},
+    {q:'Apakah cocok untuk ibu setelah melahirkan?',a:'LinaAyu dapat digunakan oleh ibu setelah melahirkan untuk membantu menjaga kenyamanan dan kesegaran area kewanitaan. Namun, jika Anda dalam masa nifas atau memiliki kondisi khusus, disarankan berkonsultasi dengan dokter terlebih dahulu.'},
+    {q:'Berapa lama penggunaan yang disarankan untuk merasakan hasil?',a:'Hasil dapat bervariasi pada setiap individu. Banyak pelanggan kami merasakan kesegaran sejak pemakaian pertama. Untuk hasil yang optimal, gunakan secara rutin selama minimal 14 hari.'},
+];
+
+/* ===== COMPONENTS ===== */
+function Anim({children,className='',delay=0,dir='up'}){
+    const[r,v]=useAnim();
+    const d={up:'translate-y-8',down:'-translate-y-8',left:'translate-x-8',right:'-translate-x-8',none:''};
+    return <div ref={r} className={`transition-all duration-700 ease-out ${v?'opacity-100 translate-x-0 translate-y-0':`opacity-0 ${d[dir]}`} ${className}`} style={{transitionDelay:`${delay}ms`}}>{children}</div>;
+}
+function Stars({r,s='w-3.5 h-3.5'}){
+    return <div className="flex gap-0.5">{[...Array(5)].map((_,i)=><svg key={i} className={`${s} ${i<r?'text-rosegold-400':'text-gray-200'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>)}</div>;
+}
+function CTA({children,className='',href='https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20LinaAyu%20Feminine%20Spray'}){
+    return <a href={href} target="_blank" rel="noopener" className={`inline-block px-8 py-4 text-base md:text-lg font-poppins font-semibold rounded-full text-white shadow-lg bg-gradient-to-r from-rosegold-400 via-blush-400 to-blush-500 hover:from-rosegold-500 hover:via-blush-500 hover:to-blush-600 active:scale-95 transition-all duration-300 shimmer-btn text-center ${className}`}>{children}</a>;
+}
+function SectHead({tag,title,light=false}){
+    return <div className="text-center mb-10 md:mb-12">
+        <span className="inline-block text-[10px] md:text-xs font-poppins font-semibold tracking-[.2em] text-blush-500 uppercase mb-3">{tag}</span>
+        <h2 className={`font-poppins font-bold text-2xl md:text-3xl lg:text-4xl leading-snug mb-4 ${light?'text-white':'text-warm-800'}`}>{title}</h2>
+        <div className={`w-16 h-0.5 mx-auto ${light?'bg-gradient-to-r from-transparent via-blush-300 to-transparent':'bg-gradient-to-r from-transparent via-rosegold-400 to-transparent'}`}></div>
+    </div>;
+}
+
+/* ===== HERO WITH REAL PRODUCT IMAGE ===== */
+function Hero(){
+    const cd=useCD();
+    const p=n=>String(n).padStart(2,'0');
+    return <section className="relative min-h-screen flex items-center overflow-hidden hero-bg" style={{background:'linear-gradient(160deg,#FFF0F3 0%,#FFF8F0 40%,#FFFCF9 70%,#FFF0F3 100%)'}}>
+        {/* Decorative blobs */}
+        <div className="absolute top-10 -left-20 w-72 h-72 rounded-full bg-blush-200/40 blur-3xl fl-1 pointer-events-none"></div>
+        <div className="absolute bottom-20 -right-16 w-80 h-80 rounded-full bg-rosegold-300/20 blur-3xl fl-2 pointer-events-none"></div>
+        <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-peach-200/30 blur-3xl fl-3 pointer-events-none"></div>
+
+        {/* Falling petals */}
+        {[...Array(6)].map((_,i)=><div key={i} className="petal bg-blush-200/60" style={{left:`${8+i*17}%`,top:'-20px',animation:`petal-fall ${8+i*3}s linear ${i*2.5}s infinite`,width:`${8+i*2}px`,height:`${8+i*2}px`}}></div>)}
+
+        <div className="relative z-10 max-w-6xl mx-auto px-5 pt-24 pb-32 md:pt-28 md:pb-20 w-full">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {/* LEFT — Real Product Image */}
+                <div className="relative flex justify-center md:justify-end order-1">
+                    <div className="relative product-float">
+                        {/* Glow ring behind product */}
+                        <div className="absolute inset-0 rounded-3xl glow-pulse"></div>
+
+                        {/* Product image container */}
+                        <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blush-300/30" style={{maxWidth:'380px'}}>
+                            <img
+                                src={PRODUCT_IMG}
+                                alt="LinaAyu Feminine Spray - Botol spray putih dengan kemasan pink"
+                                className="w-full h-auto object-cover"
+                                loading="eager"
+                                fetchpriority="high"
+                            />
+                            {/* Soft gradient overlay at bottom for blending */}
+                            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-blush-100/40 to-transparent pointer-events-none"></div>
+                        </div>
+
+                        {/* Floating ingredient badges around product */}
+                        <div className="absolute -top-4 -right-4 w-14 h-14 rounded-2xl bg-white shadow-lg shadow-blush-200/40 flex items-center justify-center text-2xl fl-1 border border-blush-100/50">🍃</div>
+                        <div className="absolute -bottom-3 -left-5 w-13 h-13 rounded-2xl bg-white shadow-lg shadow-peach-200/40 flex items-center justify-center text-xl fl-2 border border-peach-100/50" style={{width:'52px',height:'52px'}}>🌿</div>
+                        <div className="absolute top-1/2 -right-10 w-12 h-12 rounded-2xl bg-white shadow-lg shadow-green-100/40 flex items-center justify-center text-lg fl-3 border border-green-100/50">🌰</div>
+                        <div className="absolute top-6 -left-8 w-12 h-12 rounded-2xl bg-white shadow-lg shadow-teal-100/30 flex items-center justify-center text-lg fl-1 border border-teal-100/50">🌱</div>
+
+                        {/* Small "Natural Ingredients" badge */}
+                        <div className="absolute -bottom-5 right-4 md:right-8 glass rounded-full px-4 py-1.5 flex items-center gap-1.5">
+                            <span className="text-xs">🌿</span>
+                            <span className="text-[9px] font-poppins font-semibold text-warm-700 tracking-wide">NATURAL INGREDIENTS</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* RIGHT — Copy */}
+                <div className="text-center md:text-left order-2">
+                    <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-sm border border-blush-200/50">
+                        <span className="w-2 h-2 rounded-full bg-blush-500 pulse-s"></span>
+                        <span className="text-[10px] font-poppins font-semibold text-warm-700 tracking-widest">LINAAYU FEMININE SPRAY</span>
+                    </div>
+
+                    <h1 className="font-poppins font-bold text-warm-800 text-3xl md:text-4xl lg:text-[2.7rem] leading-tight mb-4">
+                        Miss V Lebih Segar,<br/>Nyaman &{' '}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blush-500 to-rosegold-400">Percaya Diri</span>{' '}
+                        Setiap Hari 💖
+                    </h1>
+
+                    <p className="font-nunito text-warm-600 text-sm md:text-base leading-relaxed mb-6 max-w-lg mx-auto md:mx-0">
+                        Perawatan feminine spray berbahan herbal alami untuk membantu menjaga kesegaran, kelembapan, kenyamanan, dan kebersihan area kewanitaan wanita modern.
+                    </p>
+
+                    {/* Product feature tags from image */}
+                    <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-5">
+                        {['pH Balance','Natural Protection','Active Serum'].map((tag,i)=>(
+                            <span key={i} className="text-[10px] font-poppins font-medium text-warm-700 bg-white/70 backdrop-blur-sm border border-blush-200/50 px-3 py-1 rounded-full">{tag}</span>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto md:mx-0 mb-5">
+                        {[['Herbal Natural Formula','✅'],['BPOM Approved','✅'],['Aman Digunakan Harian','✅'],['Packaging Aman & Privasi','✅']].map(([t,e],i)=>
+                            <div key={i} className="flex items-center gap-1.5 text-xs text-warm-600"><span className="text-blush-500 text-sm">{e}</span><span className="font-nunito">{t}</span></div>
+                        )}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bounce-g"><svg className="w-5 h-5 text-blush-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg></div>
+    </section>;
+}
+
+function TrustBar(){
+    return <section className="py-6 px-5 bg-white border-y border-blush-100/60">
+        <div className="max-w-4xl mx-auto grid grid-cols-3 gap-4 text-center">
+            {[{n:'15,000+',l:'Pelanggan Puas'},{n:'4.9/5',l:'Rating Rata-rata'},{n:'BPOM',l:'Terdaftar Resmi'}].map((s,i)=>
+                <Anim key={i} delay={i*100}>
+                    <div className="font-poppins font-bold text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-blush-500 to-rosegold-400">{s.n}</div>
+                    <div className="text-[10px] md:text-xs text-warm-500 mt-0.5">{s.l}</div>
+                </Anim>
+            )}
+        </div>
+    </section>;
+}
+
+function VideoSection(){
+    return <section className="py-12 px-5">
+        <div className="max-w-4xl mx-auto">
+            <Anim delay={120}>
+                <div className="mt-6">
+                    <div className="relative rounded-2xl overflow-hidden shadow-lg" style={{paddingTop:'56.25%'}}>
+                        <iframe
+                            src="https://www.youtube.com/embed/XM8t1eiAVdA"
+                            title="Video LinaAyu"
+                            className="absolute inset-0 w-full h-full"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                </div>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function HerbalSection(){
+    return <section className="py-16 md:py-24 px-5" style={{background:'linear-gradient(180deg,#FFFCF9 0%,#FFF8F0 100%)'}}>
+        <div className="max-w-4xl mx-auto">
+            <Anim><SectHead tag="Bahan Herbal Premium" title="Kandungan Alami yang Dipilih dengan Teliti"/></Anim>
+            <div className="grid md:grid-cols-2 gap-5">
+                {ingredients.map((ing,i)=>
+                    <Anim key={i} delay={i*120} dir={i%2===0?'up':'up'}>
+                        <div className={`bg-white rounded-2xl overflow-hidden border ${ing.border} shadow-sm hover:shadow-lg hover:shadow-blush-100/30 transition-all duration-300 group hover:-translate-y-1`}>
+                            <div className={`h-36 md:h-40 bg-gradient-to-br ${ing.color} flex items-center justify-center relative overflow-hidden`}>
+                                    {ing.img ? (
+                                        <img src={ing.img} alt={ing.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                    ) : (
+                                        <div className="z-10 group-hover:scale-110 transition-transform duration-500 text-5xl">{ing.emoji}</div>
+                                    )}
+
+                                    {/* subtle overlay to keep latin text readable */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-white/10 to-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+                                    <div className="absolute bottom-2 right-3 text-[9px] font-poppins text-warm-500/90 italic z-20">{ing.latin}</div>
+                                </div>
+                            <div className="p-5">
+                                <h3 className="font-poppins font-bold text-warm-800 text-base mb-1">{ing.name}</h3>
+                                <p className="text-xs text-warm-600/80 italic mb-3">{ing.latin}</p>
+                                <p className="text-sm text-warm-600 leading-relaxed mb-4">{ing.desc}</p>
+                                <div className="space-y-1.5">
+                                    {ing.benefits.map((b,j)=>
+                                        <div key={j} className="flex items-start gap-2 text-xs text-warm-600">
+                                            <svg className="w-4 h-4 text-blush-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                                            <span>{b}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </Anim>
+                )}
+            </div>
+        </div>
+    </section>;
+}
+
+function BenefitSection(){
+    return <section className="py-16 md:py-24 px-5 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-blush-50 blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-peach-50 blur-3xl pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+            <Anim><SectHead tag="Manfaat LinaAyu" title="Kenapa Ribuan Wanita<br/>Memilih LinaAyu?"/></Anim>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {benefitList.map((b,i)=>
+                    <Anim key={i} delay={i*80}>
+                        <div className="glass rounded-2xl p-5 hover:shadow-lg hover:shadow-blush-200/25 transition-all duration-300 group hover:-translate-y-1 h-full">
+                            <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{b.icon}</div>
+                            <h3 className="font-poppins font-semibold text-warm-800 text-sm mb-2">{b.title}</h3>
+                            <p className="text-xs text-warm-600 leading-relaxed">{b.desc}</p>
+                        </div>
+                    </Anim>
+                )}
+            </div>
+        </div>
+    </section>;
+}
+
+function EmotionalSection(){
+    return <section className="relative py-20 md:py-28 px-5 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
+            <img src="img/botol.png" alt="background bottle" className="absolute inset-0 w-full h-full object-cover opacity-50 transform scale-105" style={{objectPosition:'center 45%'}} loading="lazy"/>
+            <div className="absolute inset-0 bg-gradient-to-b from-warm-900/30 via-warm-800/18 to-warm-900/30"></div>
+        </div>
+        <div className="relative z-10 max-w-2xl mx-auto text-center">
+            <Anim>
+                <span className="inline-block text-[10px] md:text-xs font-poppins font-semibold tracking-[.2em] text-blush-300 uppercase mb-5">Untuk Bunda Sekalian</span>
+                <div className="space-y-5 mb-8">
+                    <p className="text-white/90 font-nunito text-sm md:text-base leading-relaxed">
+                        "Setelah menikah dan melahirkan, banyak wanita mulai merasa kurang percaya diri…"
+                    </p>
+                    <p className="text-white/65 font-nunito text-sm md:text-base leading-relaxed">
+                        Padahal perubahan hormon, aktivitas harian, dan proses melahirkan memang dapat memengaruhi kenyamanan area kewanitaan secara alami.
+                    </p>
+                    <p className="text-white/80 font-nunito text-sm md:text-base leading-relaxed font-semibold">
+                        Karena itu banyak wanita modern mulai lebih peduli dengan feminine wellness dan intimate self-care.
+                    </p>
+                </div>
+                <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 mb-8">
+                    <span className="text-2xl">💕</span>
+                    <span className="text-white/90 font-poppins font-medium text-sm">Merawat diri bukan kesombongan — itu bentuk cinta pada diri sendiri.</span>
+                </div>
+                <br/>
+                <CTA className="shadow-xl shadow-blush-500/20 mt-2">Mulai Merawat Diri Sekarang →</CTA>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function MommyWellnessSection(){
+    const wellnessBenefits=[
+        'Membantu awareness pentingnya latihan kegel',
+        'Mendukung kenyamanan wanita setelah melahirkan',
+        'Membantu wanita lebih percaya diri',
+        'Self care modern untuk mommy aktif',
+        'Mendukung feminine wellness routine',
+    ];
+
+    return <section className="relative py-16 md:py-24 px-5 overflow-hidden" style={{background:'linear-gradient(155deg,#FFF4F8 0%,#FFE9F0 45%,#FFF7FA 100%)'}}>
+        <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-blush-200/45 blur-3xl fl-1"></div>
+            <div className="absolute -bottom-14 left-0 w-80 h-80 rounded-full bg-peach-100/60 blur-3xl fl-2"></div>
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full h-40 opacity-25" style={{backgroundImage:'radial-gradient(circle at 1px 1px,rgba(212,165,116,.25) 1px,transparent 0)',backgroundSize:'24px 24px'}}></div>
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto">
+            <Anim>
+                <div className="text-center mb-10">
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/75 border border-blush-200/70 text-[10px] md:text-xs font-poppins font-semibold tracking-[.18em] text-blush-500 uppercase">
+                        <span>🤍</span>
+                        Mommy Feminine Care & Kegel Support
+                    </span>
+                    <h2 className="mt-5 font-poppins font-bold text-warm-800 text-2xl md:text-3xl lg:text-4xl leading-snug max-w-4xl mx-auto">
+                        Bukan Hanya Tentang Kehamilan, Tapi Juga Tentang Kenyamanan Area Feminim 🤍
+                    </h2>
+                    <p className="mt-4 text-sm md:text-base text-warm-600 max-w-3xl mx-auto leading-relaxed">
+                        Kehamilan dan pasca melahirkan sering membuat otot dasar panggul melemah. Karena itu banyak wanita mulai lebih peduli pada perawatan area kewanitaan dan latihan kegel.
+                    </p>
+                </div>
+            </Anim>
+
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
+                <Anim dir="right" delay={80}>
+                    <div className="bg-white/82 backdrop-blur-sm rounded-3xl border border-blush-100/80 shadow-xl shadow-blush-100/35 overflow-hidden h-full">
+                        <div className="relative">
+                            <img src="img/ilustrasii.jpg" alt="Ilustrasi ibu muda tersenyum percaya diri" className="w-full h-56 md:h-72 object-cover" loading="lazy"/>
+                            <div className="absolute inset-0 bg-gradient-to-t from-white/85 via-white/20 to-transparent"></div>
+                            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2">
+                                {['Feminine Wellness','Postpartum Comfort','Modern Mommy Care'].map((tag,i)=><span key={i} className="px-3 py-1 rounded-full text-[10px] font-poppins font-semibold bg-white/90 text-warm-700 border border-blush-100">{tag}</span>)}
+                            </div>
+                        </div>
+                        <div className="p-5 md:p-6">
+                            <p className="text-sm text-warm-600 leading-relaxed mb-4">
+                                Selama masa kehamilan hingga setelah persalinan, tubuh wanita mengalami banyak perubahan, termasuk pada area otot panggul dan kewanitaan. Latihan kegel sering direkomendasikan untuk membantu menjaga kekuatan otot dasar panggul, meningkatkan kenyamanan, serta membantu wanita merasa lebih percaya diri setelah melahirkan.
+                            </p>
+                            <p className="text-sm text-warm-600 leading-relaxed">
+                                Karena itu, produk pendukung wanita modern kini bukan hanya soal kecantikan, tetapi juga tentang self care, feminine wellness, dan kenyamanan tubuh secara menyeluruh.
+                            </p>
+                        </div>
+                    </div>
+                </Anim>
+
+                <Anim dir="left" delay={140}>
+                    <div className="h-full grid gap-5">
+                        <div className="bg-white/85 backdrop-blur-sm rounded-3xl border border-blush-100/80 shadow-lg shadow-blush-100/30 p-5 md:p-6">
+                            <div className="flex items-center gap-2 mb-4">
+                                <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-blush-100 to-peach-100 flex items-center justify-center text-lg">🧘</span>
+                                <h3 className="font-poppins font-semibold text-warm-800 text-base">Feminine Wellness Benefits</h3>
+                            </div>
+                            <div className="space-y-2.5">
+                                {wellnessBenefits.map((b,i)=><div key={i} className="flex items-start gap-2.5 text-sm text-warm-600">
+                                    <span className="w-5 h-5 rounded-full bg-blush-100 text-blush-500 text-[10px] font-poppins font-bold flex items-center justify-center mt-0.5">{i+1}</span>
+                                    <span>{b}</span>
+                                </div>)}
+                            </div>
+                        </div>
+
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="bg-white/85 backdrop-blur-sm rounded-2xl border border-blush-100/80 shadow-md overflow-hidden">
+                                <img src="https://picsum.photos/seed/prenatal-yoga-mom/640/420" alt="Ilustrasi yoga ibu hamil" className="w-full h-32 object-cover" loading="lazy"/>
+                                <div className="p-3.5">
+                                    <p className="text-xs font-poppins font-semibold text-warm-800 mb-1">Ilustrasi Yoga Ibu Hamil</p>
+                                    <p className="text-[11px] text-warm-600 leading-relaxed">Gerakan lembut membantu relaksasi dan awareness tubuh selama kehamilan.</p>
+                                </div>
+                            </div>
+                            <div className="bg-white/85 backdrop-blur-sm rounded-2xl border border-blush-100/80 shadow-md overflow-hidden">
+                                <img src="https://picsum.photos/seed/mommy-light-stretching/640/420" alt="Wanita melakukan stretching ringan" className="w-full h-32 object-cover" loading="lazy"/>
+                                <div className="p-3.5">
+                                    <p className="text-xs font-poppins font-semibold text-warm-800 mb-1">Stretching Ringan Harian</p>
+                                    <p className="text-[11px] text-warm-600 leading-relaxed">Rutinitas sederhana untuk menunjang kenyamanan mommy aktif setiap hari.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-white to-blush-50/90 rounded-2xl border border-blush-100/80 p-4 md:p-5">
+                            <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                                {['Emotional Comfort','Self Care Awareness','Postpartum Confidence','Modern Mommy Lifestyle'].map((pill,i)=><span key={i} className="text-[10px] font-poppins font-semibold text-warm-700 px-3 py-1 rounded-full bg-white border border-blush-100">{pill}</span>)}
+                            </div>
+                            <p className="text-[11px] text-warm-500 leading-relaxed mb-2">Produk bukan alat medis dan tidak menggantikan konsultasi dokter.</p>
+                            <p className="text-sm text-warm-700 font-semibold leading-relaxed">Rawat diri bukan hanya untuk tampil cantik, tapi juga untuk merasa nyaman setiap hari 🤍</p>
+                        </div>
+                    </div>
+                </Anim>
+            </div>
+        </div>
+    </section>;
+}
+
+function TestimonialSection(){
+    return <section className="py-16 md:py-24 px-5" style={{background:'linear-gradient(180deg,#FFF8F0 0%,#FFF0F3 50%,#FFFCF9 100%)'}}>
+        <div className="max-w-5xl mx-auto">
+            <Anim><SectHead tag="Testimoni Pelanggan" title="Apa Kata Mereka tentang LinaAyu?"/></Anim>
+            <Anim delay={150}>
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 scrollbar-hide">
+                    {testimonials.map((t,i)=>
+                        <div key={i} className="snap-start flex-shrink-0 w-[300px] md:w-[340px]">
+                            <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md hover:shadow-blush-100/40 transition-all duration-300 border border-blush-100/50 h-full flex flex-col">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <img src={`https://picsum.photos/seed/${t.seed}/80/80`} alt={t.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-blush-100" loading="lazy"/>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="font-poppins font-semibold text-warm-800 text-xs">{t.name}</span>
+                                            {t.verified&&<svg className="w-3.5 h-3.5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>}
+                                        </div>
+                                        <p className="text-[10px] text-warm-500">{t.loc} · {t.date}</p>
+                                    </div>
+                                </div>
+                                <Stars r={t.rating} s="w-3 h-3"/>
+                                <p className="text-sm text-warm-600 leading-relaxed mt-2 flex-1">"{t.text}"</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </Anim>
+            <Anim delay={300} className="text-center mt-5">
+                <p className="text-[10px] text-warm-500">← Geser untuk melihat lebih banyak testimoni →</p>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function HowToUse(){
+    return <section className="py-16 md:py-24 px-5 bg-white">
+        <div className="max-w-2xl mx-auto">
+            <Anim><SectHead tag="Cara Penggunaan" title="Mudah & Praktis,<br/>Hanya 5 Langkah"/></Anim>
+            <div className="relative">
+                <div className="absolute left-6 md:left-7 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blush-200 via-rosegold-300/40 to-blush-100 hidden sm:block"></div>
+                <div className="space-y-5">
+                    {stepsData.map((s,i)=>
+                        <Anim key={i} delay={i*100} dir="left">
+                            <div className="flex items-start gap-4">
+                                <div className="relative z-10 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br from-blush-100 to-peach-100 flex items-center justify-center flex-shrink-0 shadow-sm border border-blush-100/60">
+                                    <span className="text-xl md:text-2xl">{s.icon}</span>
+                                </div>
+                                <div className="pt-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="w-5 h-5 rounded-full bg-blush-500 text-white text-[10px] font-poppins font-bold flex items-center justify-center">{s.n}</span>
+                                        <h3 className="font-poppins font-semibold text-warm-800 text-sm md:text-base">{s.title}</h3>
+                                    </div>
+                                    <p className="text-xs md:text-sm text-warm-600 leading-relaxed pl-7">{s.desc}</p>
+                                </div>
+                            </div>
+                        </Anim>
+                    )}
+                </div>
+            </div>
+        </div>
+    </section>;
+}
+
+function PromoSection(){
+    const cd=useCD();
+    const[viewers,setViewers]=useState(53);
+    const[checkedOut,setCheckedOut]=useState(127);
+    const p=n=>String(n).padStart(2,'0');
+    useEffect(()=>{const i=setInterval(()=>setViewers(v=>Math.max(35,v+Math.floor(Math.random()*7)-3)),4500);return()=>clearInterval(i)},[]);
+    useEffect(()=>{const i=setInterval(()=>setCheckedOut(v=>v+Math.floor(Math.random()*3)),8000);return()=>clearInterval(i)},[]);
+
+    return <section className="py-16 md:py-24 px-5 relative overflow-hidden" style={{background:'linear-gradient(160deg,#FFF0F3 0%,#FFEDE4 40%,#FDE0E7 100%)'}}>
+        <div className="absolute inset-0 opacity-25 pointer-events-none" style={{backgroundImage:'radial-gradient(circle at 2px 2px,rgba(228,122,149,.12) 1px,transparent 0)',backgroundSize:'28px 28px'}}></div>
+        <div className="relative z-10 max-w-2xl mx-auto">
+            <Anim className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 border border-red-200/60 mb-4">
+                    <span className="w-2 h-2 rounded-full bg-red-500 pulse-s"></span>
+                    <span className="text-[10px] font-poppins font-bold text-red-600 tracking-wider">🔥 PROMO HARI INI — STOK TERBATAS</span>
+                </div>
+                <h2 className="font-poppins font-bold text-warm-800 text-2xl md:text-3xl mb-2">Jangan Sampai Kehabisan! 🎀</h2>
+                <p className="text-xs text-warm-500">{checkedOut} orang sudah checkout hari ini</p>
+            </Anim>
+
+            <Anim delay={100} className="flex justify-center gap-3 mb-8">
+                {[{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((t,i)=>
+                    <div key={i} className="text-center">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white shadow-lg shadow-blush-200/40 flex items-center justify-center border border-blush-100">
+                            <span className="font-poppins font-bold text-2xl md:text-3xl text-warm-800">{p(t.v)}</span>
+                        </div>
+                        <span className="text-[10px] text-warm-500 mt-1.5 block font-poppins">{t.l}</span>
+                    </div>
+                )}
+            </Anim>
+
+            <Anim delay={200}>
+                <div className="bg-white rounded-3xl shadow-xl shadow-blush-200/30 overflow-hidden max-w-sm mx-auto border border-blush-100/60">
+                    <div className="relative bg-gradient-to-br from-blush-50 via-peach-50 to-cream-100 p-6 flex items-center justify-center">
+                        <div className="absolute top-3 left-3 px-3 py-1 bg-red-500 text-white text-[9px] font-poppins font-bold rounded-full tracking-wide">BEST SELLER</div>
+                        <div className="absolute top-3 right-3 px-3 py-1 bg-rosegold-400 text-white text-[9px] font-poppins font-bold rounded-full tracking-wide">-40%</div>
+                        {/* Real product image in promo card */}
+                        <img src={PRODUCT_IMG} alt="LinaAyu Feminine Spray" className="w-44 h-auto rounded-xl shadow-md" loading="lazy"/>
+                    </div>
+                    <div className="p-5 text-center">
+                        <h3 className="font-poppins font-bold text-warm-800 text-lg mb-0.5">LinaAyu Feminine Spray</h3>
+                        <p className="text-[10px] text-warm-500 mb-3">Netto 60 mL · Perawatan Herbal Premium</p>
+                        <div className="flex items-center justify-center gap-2 mb-1">
+                            <span className="text-sm text-warm-500 line-through">Rp 249.000</span>
+                            <span className="text-[10px] bg-red-50 text-red-600 font-semibold px-2 py-0.5 rounded-full">HEMAT Rp 100.000</span>
+                        </div>
+                        <div className="font-poppins font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blush-500 to-rosegold-500 mb-3">
+                            Rp 149.000
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+                            {[['🚚','Gratis Ongkir'],['🎁','Bonus Spesial'],['📦','Packaging Rahasia'],['✅','100% Original']].map(([e,t],i)=>
+                                <span key={i} className="text-[9px] font-semibold text-warm-700 bg-cream-100 px-2 py-0.5 rounded-full">{e} {t}</span>
+                            )}
+                        </div>
+                        <CTA className="w-full shadow-lg shadow-blush-300/40 !py-3.5">Pesan Sekarang — Rp 149.000</CTA>
+                        <div className="flex items-center justify-center gap-1.5 mt-3 text-[10px] text-warm-500">
+                            <svg className="w-3 h-3 text-blush-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <span>{viewers} orang sedang melihat produk ini</span>
+                        </div>
+                    </div>
+                </div>
+            </Anim>
+            <Anim delay={350} className="text-center mt-5">
+                <p className="text-[10px] text-warm-500 italic">*Stok promo terbatas. Harga dapat berubah sewaktu-waktu.</p>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function FAQSection(){
+    const[open,setOpen]=useState(null);
+    return <section className="py-16 md:py-24 px-5 bg-cream-50">
+        <div className="max-w-2xl mx-auto">
+            <Anim><SectHead tag="Pertanyaan Umum" title="Hal yang Sering Ditanyakan"/></Anim>
+            <Anim delay={150}>
+                <div className="bg-white rounded-2xl border border-blush-100/60 overflow-hidden shadow-sm">
+                    {faqs.map((f,i)=>
+                        <div key={i} className={`border-b border-blush-100/50 ${i===faqs.length-1?'border-b-0':''}`}>
+                            <button onClick={()=>setOpen(open===i?null:i)} className="w-full flex items-center justify-between px-5 md:px-6 py-4 text-left hover:bg-blush-50/40 transition-colors">
+                                <span className="font-poppins font-semibold text-warm-800 text-sm md:text-base pr-4">{f.q}</span>
+                                <svg className={`w-4 h-4 text-blush-400 flex-shrink-0 transition-transform duration-300 ${open===i?'rotate-180':''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div className={`overflow-hidden transition-all duration-400 ease-in-out ${open===i?'max-h-60 opacity-100':'max-h-0 opacity-0'}`}>
+                                <div className="px-5 md:px-6 pb-4 text-warm-600 text-sm leading-relaxed font-nunito">{f.a}</div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function FinalCTA(){
+    return <section className="py-16 md:py-24 px-5 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-blush-100/50 blur-3xl"></div>
+            <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-rosegold-300/15 blur-3xl"></div>
+        </div>
+        <div className="relative z-10 max-w-xl mx-auto text-center">
+            <Anim>
+                <div className="text-5xl mb-5">💕</div>
+                <h2 className="font-poppins font-bold text-warm-800 text-2xl md:text-3xl lg:text-4xl leading-snug mb-4">
+                    Rawat Diri, Tingkatkan<br/>Rasa Percaya Diri
+                </h2>
+                <p className="font-nunito text-warm-600 text-sm md:text-base leading-relaxed mb-8 max-w-md mx-auto">
+                    Karena setiap wanita berhak merasa nyaman, segar, dan bahagia dengan dirinya sendiri.
+                </p>
+                <CTA className="shadow-xl shadow-blush-300/40 text-lg px-10 py-4">Checkout Sekarang 💖</CTA>
+                <div className="flex flex-wrap justify-center gap-4 mt-6 text-[10px] md:text-xs text-warm-500">
+                    {['✅ Pengiriman Rahasia','✅ Garansi Original','✅ Bisa COD','✅ Gratis Ongkir'].map((t,i)=><span key={i}>{t}</span>)}
+                </div>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function OrderFormSection(){
+    const[form,setForm]=useState({name:'',phone:'',address:''});
+    const waNumber='6281234567890';
+
+    const updateField=(field,value)=>setForm(prev=>({...prev,[field]:value}));
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        const message=[
+            'Halo, saya ingin memesan LinaAyu Feminine Spray.',
+            `Nama: ${form.name}`,
+            `No. Telp: ${form.phone}`,
+            `Alamat: ${form.address}`,
+        ].join('\n');
+        const url=`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url,'_blank','noopener,noreferrer');
+    };
+
+    return <section className="py-16 md:py-24 px-5 bg-cream-50 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-60" style={{backgroundImage:'radial-gradient(circle at 1px 1px,rgba(244,160,181,.12) 1px,transparent 0)',backgroundSize:'26px 26px'}}></div>
+        <div className="relative z-10 max-w-3xl mx-auto">
+            <Anim><SectHead tag="Form Pemesanan" title="Isi Data di Bawah, Kami Bantu Proses Pesanan"/></Anim>
+            <Anim delay={120}>
+                <div className="bg-white rounded-3xl border border-blush-100/70 shadow-xl shadow-blush-100/30 p-5 md:p-8">
+                    <div className="grid md:grid-cols-[1.1fr_.9fr] gap-6 items-start">
+                        <div>
+                            <h3 className="font-poppins font-bold text-warm-800 text-xl mb-2">Data Pengiriman</h3>
+                            <p className="text-sm text-warm-600 leading-relaxed mb-5">
+                                Isi nama, nomor telepon, dan alamat Anda. Setelah tombol dikirim ditekan, pesan WhatsApp akan terbuka otomatis dengan data yang sudah terisi.
+                            </p>
+
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <label className="block">
+                                    <span className="block text-xs font-poppins font-semibold text-warm-700 mb-1.5">Nama</span>
+                                    <input
+                                        type="text"
+                                        value={form.name}
+                                        onChange={e=>updateField('name',e.target.value)}
+                                        placeholder="Masukkan nama lengkap"
+                                        required
+                                        className="w-full px-4 py-3 rounded-2xl border border-blush-100 bg-cream-50/60 text-sm text-warm-700 outline-none focus:ring-2 focus:ring-blush-200 focus:border-blush-200 transition"
+                                    />
+                                </label>
+
+                                <label className="block">
+                                    <span className="block text-xs font-poppins font-semibold text-warm-700 mb-1.5">No. Telp</span>
+                                    <input
+                                        type="tel"
+                                        value={form.phone}
+                                        onChange={e=>updateField('phone',e.target.value)}
+                                        placeholder="Contoh: 08xxxxxxxxxx"
+                                        required
+                                        className="w-full px-4 py-3 rounded-2xl border border-blush-100 bg-cream-50/60 text-sm text-warm-700 outline-none focus:ring-2 focus:ring-blush-200 focus:border-blush-200 transition"
+                                    />
+                                </label>
+
+                                <label className="block">
+                                    <span className="block text-xs font-poppins font-semibold text-warm-700 mb-1.5">Alamat</span>
+                                    <textarea
+                                        value={form.address}
+                                        onChange={e=>updateField('address',e.target.value)}
+                                        placeholder="Masukkan alamat lengkap"
+                                        required
+                                        rows="4"
+                                        className="w-full px-4 py-3 rounded-2xl border border-blush-100 bg-cream-50/60 text-sm text-warm-700 outline-none focus:ring-2 focus:ring-blush-200 focus:border-blush-200 transition resize-none"
+                                    ></textarea>
+                                </label>
+
+                                <button
+                                    type="submit"
+                                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full font-poppins font-semibold text-white bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 shadow-lg shadow-green-500/20 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 active:scale-[.99] transition-all duration-300"
+                                >
+                                    <span>📲</span>
+                                    Kirim ke WhatsApp
+                                </button>
+                            </form>
+                        </div>
+
+                        <div className="rounded-3xl bg-gradient-to-br from-blush-50 to-peach-50 border border-blush-100/80 p-5 md:p-6 h-full">
+                            <div className="text-[10px] font-poppins font-semibold tracking-[.2em] text-blush-500 uppercase mb-3">Format Pesan</div>
+                            <div className="bg-white/80 rounded-2xl border border-blush-100 p-4 text-sm text-warm-700 leading-relaxed whitespace-pre-line">
+                                {`Halo, saya ingin memesan LinaAyu Feminine Spray.
+Nama: [nama]
+No. Telp: [no telp]
+Alamat: [alamat]`}
+                            </div>
+                            <div className="mt-4 space-y-3 text-sm text-warm-600 leading-relaxed">
+                                <p>Setelah dikirim, admin akan menghubungi Anda melalui WhatsApp untuk proses berikutnya.</p>
+                                <div className="flex items-start gap-2 p-3 rounded-2xl bg-white/70 border border-blush-100">
+                                    <span className="text-blush-500 mt-0.5">✅</span>
+                                    <span>Data Anda langsung dikirim ke WhatsApp tanpa perlu mengetik ulang.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Anim>
+        </div>
+    </section>;
+}
+
+function Footer(){
+    return <footer className="bg-warm-800 text-white/60 py-10 px-5">
+        <div className="max-w-2xl mx-auto text-center">
+            <div className="font-poppins font-bold text-white text-lg mb-1">LinaAyu</div>
+            <div className="text-[10px] text-white/40 font-poppins tracking-wider mb-5">FEMININE SPRAY — HERBAL PREMIUM</div>
+            <div className="flex justify-center gap-3 mb-5">
+                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition-colors duration-300" aria-label="WhatsApp">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+                <a href="https://instagram.com/linaayu.id" target="_blank" rel="noopener" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 transition-colors duration-300" aria-label="Instagram">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+            </div>
+            <div className="text-xs leading-relaxed mb-4 space-y-0.5">
+                <p>📞 CS WhatsApp: <a href="https://wa.me/6281234567890" className="text-blush-300 hover:text-blush-200 transition-colors">0812-3456-7890</a></p>
+                <p>📧 Email: hello@linaayu.co.id</p>
+            </div>
+            <div className="border-t border-white/10 pt-4">
+                <p className="text-[9px] leading-relaxed text-white/35 mb-2">
+                    DISCLAIMER: Produk ini bukan obat dan tidak dimaksudkan untuk mendiagnosa, mengobati, menyembuhkan, atau mencegah penyakit apapun. Hasil dapat bervariasi pada setiap individu. Konsultasikan dengan tenaga kesehatan profesional jika Anda memiliki kondisi khusus.
+                </p>
+                <p className="text-[9px] text-white/25">© 2025 LinaAyu Feminine Spray. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>;
+}
+
+/* ===== FLOATING ELEMENTS ===== */
+
+function WAFloat(){
+    const[show,setShow]=useState(false);
+    useEffect(()=>{const t=setTimeout(()=>setShow(true),2500);return()=>clearTimeout(t)},[]);
+    if(!show)return null;
+    return <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20tertarik%20dengan%20LinaAyu%20Feminine%20Spray" target="_blank" rel="noopener"
+        className="fixed bottom-24 md:bottom-8 right-5 z-50 w-14 h-14 rounded-full bg-green-500 shadow-lg shadow-green-500/30 flex items-center justify-center hover:bg-green-600 hover:scale-110 active:scale-95 transition-all duration-300 bounce-g"
+        aria-label="Chat WhatsApp">
+        <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>;
+}
+
+function LivePopup(){
+    const[popup,setPopup]=useState(null);
+    const[exiting,setExiting]=useState(false);
+    const show=useCallback(()=>{
+        const o=orders[Math.floor(Math.random()*orders.length)];
+        setPopup(o);setExiting(false);
+        const h=setTimeout(()=>{setExiting(true);setTimeout(()=>{setPopup(null);setExiting(false)},400)},4000);
+        return()=>clearTimeout(h);
+    },[]);
+    useEffect(()=>{
+        const f=setTimeout(show,7000);
+        const i=setInterval(show,13000+Math.random()*7000);
+        return()=>{clearTimeout(f);clearInterval(i)};
+    },[show]);
+    if(!popup)return null;
+    return <div className={`fixed bottom-28 md:bottom-8 left-5 z-50 max-w-[270px] ${exiting?'popup-out':'popup-in'}`}>
+        <div className="bg-white rounded-2xl shadow-xl shadow-black/8 p-3.5 border border-blush-100/60 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-cream-100 flex items-center justify-center flex-shrink-0 text-base">🛒</div>
+            <div className="min-w-0">
+                <p className="text-[11px] font-poppins font-semibold text-warm-800 truncate">{popup.n}</p>
+                <p className="text-[9px] text-warm-500">{popup.c} · Baru saja checkout</p>
+            </div>
+        </div>
+    </div>;
+}
+
+function StickyBar(){
+    const s=useSticky();
+    return <div className={`sticky-bar fixed bottom-0 left-0 right-0 z-40 md:hidden ${s?'vis':''}`} style={{background:'rgba(255,255,255,.93)',backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',borderTop:'1px solid rgba(253,224,231,.5)'}}>
+        <div className="flex items-center justify-between px-4 py-3 gap-3">
+            <div>
+                <p className="text-[10px] text-warm-500 line-through">Rp 249.000</p>
+                <p className="font-poppins font-bold text-warm-800 text-sm">Rp 149.000</p>
+            </div>
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20mau%20pesan%20LinaAyu%20Feminine%20Spray" target="_blank" rel="noopener"
+                className="flex-shrink-0 px-6 py-2.5 rounded-full font-poppins font-semibold text-white text-sm bg-gradient-to-r from-rosegold-400 via-blush-400 to-blush-500 shadow-lg shadow-blush-300/40 active:scale-95 transition-transform">
+                Pesan Sekarang →
+            </a>
+        </div>
+    </div>;
+}
+
+/* ===== APP ===== */
+function App(){
+    return <div className="overflow-x-hidden">
+        <Hero/>
+        <VideoSection/>
+        <HerbalSection/>
+        <BenefitSection/>
+        <EmotionalSection/>
+        <MommyWellnessSection/>
+        <TestimonialSection/>
+        <HowToUse/>
+        <PromoSection/>
+        <FAQSection/>
+        <FinalCTA/>
+        <OrderFormSection/>
+        <Footer/>
+        <StickyBar/>
+        <WAFloat/>
+        <LivePopup/>
+    </div>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
